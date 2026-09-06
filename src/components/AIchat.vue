@@ -1,23 +1,13 @@
 <template>
-  <div class="layout">
-    <div class="sider">
-      <h3>航空知识库</h3>
-      <a href="#">首页</a>
-      <a href="#">用户管理</a>
-      <a href="#">文档管理</a>
-      <a href="#" class="active">AI问答</a>
+  <div class="content">
+    <h2>航空助手</h2>
+    <div class="chat-box" id="chatBox">
+      <div v-for="(msg, idx) in msgList" :key="idx">{{ msg }}</div>
     </div>
-
-    <div class="content">
-      <h2>航空助手</h2>
-      <div class="chat-box" id="chatBox">
-        <div v-for="(msg, idx) in msgList" :key="idx">{{ msg }}</div>
-      </div>
-      <div class="chat-item">
-        <input type="text" placeholder="请输入问题" v-model="question" />
-        <button @click="clearBtn">清空聊天</button>
-        <button @click="sendBtn">发送</button>
-      </div>
+    <div class="chat-item">
+      <input type="text" placeholder="请输入问题" v-model="question" />
+      <button @click="clearBtn">清空聊天</button>
+      <button @click="sendBtn">发送</button>
     </div>
   </div>
 </template>
@@ -52,47 +42,6 @@ export default {
 </script>
 
 <style scoped>
-.layout {
-  /*弹性布局 只能加在父元素上*/
-  display: flex;
-  min-height: 100vh;
-}
-
-.sider {
-  width: 220px;
-  background: #001529;
-  color: white;
-  padding: 20px;
-}
-
-.sider h3 {
-  margin: 0 0 20px;
-  font-size: 18px;
-}
-
-.sider a {
-  display: block;
-  color: rgba(255, 255, 255, 0.75);
-  /*去掉a标签默认下划线*/
-  text-decoration: none;
-  /*上下 左右*/
-  padding: 12px 15px;
-  border-radius: 6px;
-  margin-bottom: 6px;
-}
-
-/*鼠标悬浮伪类*/
-.sider a:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
-}
-
-/*鼠标选中这个*/
-.sider a.active {
-  background: #1890ff;
-  color: #fff;
-}
-
 .content {
   /*自动占剩下全部剩余宽度*/
   flex: 1;
@@ -172,8 +121,12 @@ export default {
 .chat-item button {
   width: 150px;
   height: 45px;
-  background: #1890ff;
+  background: gray;
   border-radius: 8px;
   font-size: 16px;
+}
+
+.chat-item button:hover {
+  background: #1890ff;
 }
 </style>

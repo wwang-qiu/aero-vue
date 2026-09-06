@@ -50,7 +50,7 @@ export default {
       if (this.username === "qiuqiu" && this.password === "1314") {
         this.message = "登陆成功";
         this.status = "success";
-        this.$router.push("./index");
+        this.$router.push("/index");
       } else {
         this.message = "用户名或密码错误";
         this.status = "error";

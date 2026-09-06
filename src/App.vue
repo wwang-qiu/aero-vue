@@ -1,7 +1,7 @@
-<script setup>
-import AIchat from "./components/AIchat.vue";
-</script>
+<script setup></script>
 
 <template>
-  <AIchat />
+  <div>
+    <router-view></router-view>
+  </div>
 </template>

@@ -2,42 +2,17 @@
   <div class="layout">
     <div class="sider">
       <h3>航空知识库</h3>
-      <a href="index.html" class="active">首页</a>
-      <a href="user.html">用户管理</a>
-      <a href="document.html">文档管理</a>
-      <a href="AIchat.html">AI问答</a>
+      <router-link to="/index">首页</router-link>
+      <router-link to="/index/user">用户管理</router-link>
+      <router-link to="/index/document">文档管理</router-link>
+      <router-link to="/index/AIchat">AI问答</router-link>
     </div>
-
-    <div class="content">
-      <h2>首页</h2>
-      <div class="cards">
-        <div class="card">
-          <h3>用户数量</h3>
-          <p>{{ userCount }}</p>
-        </div>
-        <div class="card">
-          <h3>文档数量</h3>
-          <p>{{ documentCount }}</p>
-        </div>
-        <div class="card">
-          <h3>AI问答次数</h3>
-          <p>{{ questionCount }}</p>
-        </div>
-      </div>
-    </div>
+    <router-view />
   </div>
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      userCount: "128",
-      documentCount: "256",
-      questionCount: "512",
-    };
-  },
-};
+export default {};
 </script>
 
 <style scoped>
@@ -72,32 +47,8 @@ export default {
   color: #fff;
 }
 
-.sider a.active {
+.sider a.router-link-exact-active {
   background: #1890ff;
   color: #fff;
-}
-
-.content {
-  flex: 1;
-  padding: 30px;
-  display: flex;
-  flex-direction: column;
-}
-
-.content h2 {
-  margin-top: 0;
-  color: #333;
-}
-
-.cards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-}
-
-.card {
-  background: white;
-  padding: 30px;
-  border-radius: 10px;
 }
 </style>

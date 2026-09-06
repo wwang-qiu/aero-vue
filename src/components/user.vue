@@ -1,50 +1,40 @@
 <template>
-  <div class="layout">
-    <div class="sider">
-      <h3>航空知识库</h3>
-      <a href="#">首页</a>
-      <a href="#" class="active">用户管理</a>
-      <a href="#">文档管理</a>
-      <a href="#">AI问答</a>
+  <div class="content">
+    <h2>用户管理</h2>
+    <!--搜索区域-->
+    <div class="search">
+      <input type="text" placeholder="请输入用户名称" v-model="searchInput" />
+      <button @click="searchBtn">搜索</button>
+    </div>
+    <!--添加用户-->
+    <div class="addUser">
+      <input type="text" placeholder="用户名" v-model="username" />
+      <input type="email" placeholder="邮箱" v-model="email" />
+      <button @click="addBtn">添加用户</button>
     </div>
 
-    <div class="content">
-      <h2>用户管理</h2>
-      <!--搜索区域-->
-      <div class="search">
-        <input type="text" placeholder="请输入用户名称" v-model="searchInput" />
-        <button @click="searchBtn">搜索</button>
-      </div>
-      <!--添加用户-->
-      <div class="addUser">
-        <input type="text" placeholder="用户名" v-model="username" />
-        <input type="email" placeholder="邮箱" v-model="email" />
-        <button @click="addBtn">添加用户</button>
-      </div>
-
-      <!--用户列表-->
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>用户名</th>
-            <th>邮箱</th>
-            <th>操作</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="user in showList" :key="user.id">
-            <td>{{ user.id }}</td>
-            <td>{{ user.username }}</td>
-            <td>{{ user.email }}</td>
-            <td>
-              <button @click="editUser(user.id)">编辑</button>
-              <button @click="deleteUser(user.id)">删除</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <!--用户列表-->
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>用户名</th>
+          <th>邮箱</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="user in showList" :key="user.id">
+          <td>{{ user.id }}</td>
+          <td>{{ user.username }}</td>
+          <td>{{ user.email }}</td>
+          <td>
+            <button @click="editUser(user.id)">编辑</button>
+            <button @click="deleteUser(user.id)">删除</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
@@ -88,7 +78,7 @@ export default {
         this.showList = this.users.slice();
         return;
       }
-      this.showLists = this.users.filter((user) =>
+      this.showList = this.users.filter((user) =>
         user.username.includes(keyword),
       );
     },
@@ -141,44 +131,6 @@ export default {
 </script>
 
 <style scoped>
-/* 整体布局 */
-.layout {
-  display: flex;
-  min-height: 100vh;
-}
-
-/* 侧边栏 */
-.sider {
-  width: 220px;
-  background: #001529;
-  color: white;
-  padding: 20px;
-}
-
-.sider h3 {
-  margin: 0 0 20px;
-  font-size: 18px;
-}
-
-.sider a {
-  display: block;
-  color: rgba(255, 255, 255, 0.75);
-  text-decoration: none;
-  padding: 12px 15px;
-  border-radius: 6px;
-  margin-bottom: 6px;
-}
-
-.sider a:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
-}
-
-.sider a.active {
-  background: #1890ff;
-  color: #fff;
-}
-
 /* 内容区 */
 .content {
   flex: 1;
@@ -250,6 +202,10 @@ button:active {
   color: white;
   border: none;
   cursor: pointer;
+}
+
+.search button:hover {
+  background-color: #1890ff;
 }
 
 /* 添加用户区域 */
