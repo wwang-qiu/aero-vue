@@ -1,46 +1,20 @@
 <template>
   <div class="content">
     <h2>我的文档</h2>
-
-    <!--搜索区域-->
-    <div class="search">
-      <input type="text" placeholder="请输入文件名" v-model="searchInput" />
-      <button @click="searchBtn">搜索</button>
-    </div>
-
-    <!--文档列表-->
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>文件名</th>
-          <th>大小</th>
-          <th>上传时间</th>
-          <th>操作</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="doc in showList" :key="doc.id">
-          <td>{{ doc.id }}</td>
-          <td>{{ doc.doName }}</td>
-          <td>{{ doc.size }}</td>
-          <td>{{ doc.upTime }}</td>
-          <td>
-            <button @click="deleteBtn(doc.id)">删除</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
+    <documentSearch @search="searchBtn"></documentSearch>
+    <documentList :documents="showList" @delete="deleteBtn"></documentList>
     <br />
-    <!--让用户选择文件 先把它隐藏起来-->
-    <input type="file" ref="fileInput" hidden @change="onfileChange" />
-    <button class="upBtn" @click="upBtn">上传材料</button>
+    <documentUpdown @updown="upBtn"></documentUpdown>
   </div>
 </template>
 
 <script>
+import documentItem from "./documentItem.vue";
+import documentList from "./documentList.vue";
+import documentSearch from "./documentSearch.vue";
+import documentUpdown from "./documentUpdown.vue";
 export default {
+  components: { documentSearch, documentList, documentItem, documentUpdown },
   data() {
     return {
       // 所有文档（原始数据）
@@ -60,7 +34,6 @@ export default {
       ],
       // 列表实际显示的数据（搜索时会被过滤）
       showList: [],
-      searchInput: "",
     };
   },
   created() {
@@ -69,8 +42,8 @@ export default {
   },
   methods: {
     //搜索材料
-    searchBtn() {
-      const keyword = this.searchInput.trim();
+    searchBtn(searchInput) {
+      const keyword = searchInput.trim();
       if (keyword === "") {
         this.showList = this.documents.slice();
         return;
@@ -89,18 +62,11 @@ export default {
     },
 
     //上传材料
-    upBtn() {
-      this.$refs.fileInput.click();
-    },
-    onfileChange(e) {
-      const file = e.target.files[0];
-      if (!file) {
-        return;
-      }
+    upBtn(fileInfo) {
       this.documents.push({
         id: Date.now(),
-        doName: file.name,
-        size: (file.size / 1024 / 1024).toFixed(2) + "MB",
+        doName: fileInfo.doName,
+        size: fileInfo.size,
         upTime: new Date().toLocaleDateString(),
       });
       this.showList = this.documents.slice();
@@ -134,109 +100,5 @@ input {
 
 input:focus {
   border-color: #1890ff;
-}
-
-/* 搜索区域 */
-.search {
-  padding: 15px;
-  background: #fafafa;
-  border-radius: 6px;
-  margin-bottom: 20px;
-  border: 1px solid #f0f0f0;
-  display: flex;
-}
-
-.search input {
-  width: 200px;
-  margin-right: 10px;
-}
-
-.search button {
-  height: 40px;
-  padding: 0 20px;
-  background: gray;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-.search button:hover {
-  background: #1890ff;
-}
-
-.search button:active {
-  background: #096dd9;
-}
-
-/* 表格 */
-table {
-  width: 100%;
-  background: white;
-  border: 1px solid #ddd;
-  border-collapse: collapse;
-}
-
-table thead tr {
-  background: #fafafa;
-  font-weight: bold;
-}
-
-td,
-th {
-  border: 1px solid #ddd;
-  padding: 15px;
-  text-align: center;
-}
-
-/* 斑马纹 */
-table tbody tr:nth-child(odd) {
-  background: #fafafa;
-}
-
-/* 悬浮效果 */
-table tbody tr:hover {
-  background: #e6f7ff;
-  transition: background 0.3s;
-}
-
-/* 表格内删除按钮 */
-td button {
-  background: #ff4d4f;
-  color: white;
-  border: none;
-  padding: 6px 14px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-td button:hover {
-  background: #ff7875;
-}
-
-td button:active {
-  background: #d9363e;
-}
-
-/* 上传材料按钮 */
-.upBtn {
-  width: 120px;
-  height: 40px;
-  background: gray;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-.upBtn:hover {
-  background: #1890ff;
-}
-
-.upBtn:active {
-  background: #096dd9;
 }
 </style>

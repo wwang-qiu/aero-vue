@@ -12,6 +12,7 @@ import AIchat from "../components/AIchat.vue"
 //创建路由对象
 const router=createRouter({
   history:createWebHistory(),
+  //路由规则表
   routes:[
     {
       path:"/",
