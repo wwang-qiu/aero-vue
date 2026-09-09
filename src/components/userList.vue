@@ -3,41 +3,44 @@
     <thead>
       <tr>
         <th>ID</th>
-        <th>文件名</th>
-        <th>大小</th>
-        <th>上传时间</th>
+        <th>用户名</th>
+        <th>邮箱</th>
         <th>操作</th>
       </tr>
     </thead>
     <tbody>
-      <documentItem
-        v-for="doc in documents"
-        :key="doc.id"
-        :document="doc"
-        @delete="deleteBtn"
-      ></documentItem>
+      <userItem
+        v-for="user in users"
+        :key="user.id"
+        :user="user"
+        @edit="editUser"
+        @delete="deleteUser"
+      ></userItem>
     </tbody>
   </table>
 </template>
 
 <script setup>
-import documentItem from "./documentItem.vue";
+import userItem from "./userItem.vue";
 
 defineProps({
-  documents: {
+  users: {
     type: Array,
     required: true,
   },
 });
 
-const emit = defineEmits(["delete"]);
+const emit = defineEmits(["edit", "delete"]);
 
-function deleteBtn(id) {
+function editUser(id) {
+  emit("edit", id);
+}
+function deleteUser(id) {
   emit("delete", id);
 }
 </script>
 
-<style>
+<style scoped>
 /* 表格 */
 table {
   width: 100%;

@@ -1,33 +1,19 @@
 <template>
   <div class="content">
     <h2>首页</h2>
-    <div class="cards">
-      <div class="card">
-        <h3>用户数量</h3>
-        <p>{{ userCount }}</p>
-      </div>
-      <div class="card">
-        <h3>文档数量</h3>
-        <p>{{ documentCount }}</p>
-      </div>
-      <div class="card">
-        <h3>AI问答次数</h3>
-        <p>{{ questionCount }}</p>
-      </div>
-    </div>
+    <homeList :stats="stats"></homeList>
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      userCount: "128",
-      documentCount: "256",
-      questionCount: "512",
-    };
-  },
-};
+<script setup>
+import { ref } from "vue";
+import homeList from "./homeList.vue";
+
+const stats = ref([
+  { title: "用户数量", value: "128" },
+  { title: "文档数量", value: "256" },
+  { title: "AI问答次数", value: "512" },
+]);
 </script>
 
 <style>
@@ -41,17 +27,5 @@ export default {
 .content h2 {
   margin-top: 0;
   color: #333;
-}
-
-.cards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-}
-
-.card {
-  background: white;
-  padding: 30px;
-  border-radius: 10px;
 }
 </style>

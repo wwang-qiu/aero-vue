@@ -8,71 +8,60 @@
   </div>
 </template>
 
-<script>
-import documentItem from "./documentItem.vue";
+<script setup>
+import { ref, computed } from "vue";
 import documentList from "./documentList.vue";
 import documentSearch from "./documentSearch.vue";
 import documentUpdown from "./documentUpdown.vue";
-export default {
-  components: { documentSearch, documentList, documentItem, documentUpdown },
-  data() {
-    return {
-      // 所有文档（原始数据）
-      documents: [
-        {
-          id: 1,
-          doName: "发动机维修材料.pdf",
-          size: "2.5MB",
-          upTime: "2026-09-01",
-        },
-        {
-          id: 2,
-          doName: "航空材料介绍.pdf",
-          size: "3.8MB",
-          upTime: "2026-09-02",
-        },
-      ],
-      // 列表实际显示的数据（搜索时会被过滤）
-      showList: [],
-    };
-  },
-  created() {
-    // 页面加载时显示所有文档
-    this.showList = this.documents.slice();
-  },
-  methods: {
-    //搜索材料
-    searchBtn(searchInput) {
-      const keyword = searchInput.trim();
-      if (keyword === "") {
-        this.showList = this.documents.slice();
-        return;
-      }
-      this.showList = this.documents.filter(function (doc) {
-        return doc.doName.includes(keyword);
-      });
-    },
 
-    //删除材料
-    deleteBtn(id) {
-      this.documents = this.documents.filter(function (doc) {
-        return doc.id !== id;
-      });
-      this.showList = this.documents.slice();
-    },
-
-    //上传材料
-    upBtn(fileInfo) {
-      this.documents.push({
-        id: Date.now(),
-        doName: fileInfo.doName,
-        size: fileInfo.size,
-        upTime: new Date().toLocaleDateString(),
-      });
-      this.showList = this.documents.slice();
-    },
+// 所有文档（原始数据）
+const documents = ref([
+  {
+    id: 1,
+    doName: "发动机维修材料.pdf",
+    size: "2.5MB",
+    upTime: "2026-09-01",
   },
-};
+  {
+    id: 2,
+    doName: "航空材料介绍.pdf",
+    size: "3.8MB",
+    upTime: "2026-09-02",
+  },
+]);
+const searchInput = ref("");
+
+const showList = computed(() => {
+  const keyword = searchInput.value.trim();
+  if (keyword === "") {
+    return documents.value;
+  }
+  return documents.value.filter(function (doc) {
+    return doc.doName.includes(keyword);
+  });
+});
+
+//搜索材料
+function searchBtn(value) {
+  searchInput.value = value;
+}
+
+//删除材料
+function deleteBtn(id) {
+  documents.value = documents.value.filter(function (doc) {
+    return doc.id !== id;
+  });
+}
+
+//上传材料
+function upBtn(fileInfo) {
+  documents.value.push({
+    id: Date.now(),
+    doName: fileInfo.doName,
+    size: fileInfo.size,
+    upTime: new Date().now(),
+  });
+}
 </script>
 
 <style scoped>

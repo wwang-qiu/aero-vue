@@ -1,132 +1,44 @@
 <template>
   <div class="content">
     <h2>航空助手</h2>
-    <div class="chat-box" id="chatBox">
-      <div v-for="(msg, idx) in msgList" :key="idx">{{ msg }}</div>
-    </div>
-    <div class="chat-item">
-      <input type="text" placeholder="请输入问题" v-model="question" />
-      <button @click="clearBtn">清空聊天</button>
-      <button @click="sendBtn">发送</button>
-    </div>
+    <!--聊天记录-->
+    <chatBox :msgList="msgList"></chatBox>
+    <!--输入区域-->
+    <chatInput @send="sendBtn" @clear="clearBtn"></chatInput>
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      question: "",
-      msgList: ["AI：你好，我可以回答航空相关问题。"],
-    };
-  },
-  methods: {
-    clearBtn() {
-      this.msgList = ["AI：你好，我可以回答航空相关问题。"];
-    },
-    sendBtn() {
-      const q = this.question;
-      if (q === "") {
-        alert("请输入问题");
-        return;
-      }
-      //用户消息a
-      this.msgList.push("用户：+q");
-      //AI消息
-      this.msgList.push("AI正在思考");
-      //清空输入框
-      this.question = "";
-    },
-  },
-};
+<script setup>
+import { ref } from "vue";
+import chatBox from "./chatBox.vue";
+import chatInput from "./chatInput.vue";
+
+const msgList = ref([
+  { role: "ai", text: "你好，我可以回答航空相关问题。" },
+]);
+
+//清空聊天（始终保留第一条欢迎语）
+function clearBtn() {
+  msgList.value = msgList.value.slice(0, 1);
+}
+//发送消息
+function sendBtn(question) {
+  if (question === "") {
+    alert("请输入问题");
+    return;
+  }
+  //用户消息
+  msgList.value.push({ role: "user", text: question });
+  //AI消息
+  msgList.value.push({ role: "ai", text: "正在思考" });
+}
 </script>
 
 <style scoped>
 .content {
-  /*自动占剩下全部剩余宽度*/
   flex: 1;
   padding: 30px;
   display: flex;
-  /*垂直纵向从上往下排*/
   flex-direction: column;
-}
-.chat-box {
-  width: 100%;
-  height: 500px;
-  background: white;
-  border-radius: 10px;
-  padding: 20px;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  overflow-y: auto;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.chat-box div {
-  width: fit-content;
-  max-width: 70%;
-
-  background: #f0f2f5;
-
-  padding: 15px 20px;
-
-  border-radius: 12px;
-
-  color: #333;
-
-  font-size: 16px;
-
-  line-height: 25px;
-}
-
-/* AI消息 */
-.chat-box div:nth-child(odd) {
-  background: #f0f2f5;
-
-  align-self: flex-start;
-}
-
-/* 用户消息 */
-.chat-box div:nth-child(even) {
-  background: #1890ff;
-
-  color: white;
-
-  align-self: flex-end;
-}
-
-.chat-item {
-  display: flex;
-  margin-top: 20px;
-  gap: 15px;
-}
-
-.chat-item input {
-  flex: 1;
-  height: 45px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  padding: 0 15px;
-  font-size: 15px;
-}
-
-.chat-item input:focus {
-  outline: none;
-  border-color: #1890ff;
-}
-
-.chat-item button {
-  width: 150px;
-  height: 45px;
-  background: gray;
-  border-radius: 8px;
-  font-size: 16px;
-}
-
-.chat-item button:hover {
-  background: #1890ff;
 }
 </style>

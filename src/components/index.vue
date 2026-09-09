@@ -11,8 +11,12 @@
   </div>
 </template>
 
-<script>
-export default {};
+<script setup>
+import { storeToRefs } from "pinia";
+import useAuthStore from "../stores/authStore";
+const authStore = useAuthStore();
+//从 Pinia 仓库中把响应式数据拿出来，同时保持响应式。
+const { username, isLogin, welcomeText } = storeToRefs(authStore);
 </script>
 
 <style scoped>

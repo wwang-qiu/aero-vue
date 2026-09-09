@@ -20,45 +20,39 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      username: "",
-      password: "",
-      message: "",
-      status: "",
-      disabled: false,
-    };
-  },
-  methods: {
-    loginBtn() {
-      this.disabled = true;
-      this.message = "";
-      if (this.username === "") {
-        this.message = "请输入用户名";
-        this.status = "error";
-        this.disabled = false;
-        return;
-      }
-      if (this.password === "") {
-        this.message = "请输入密码";
-        this.status = "error";
-        this.disabled = false;
-        return;
-      }
-      if (this.username === "qiuqiu" && this.password === "1314") {
-        this.message = "登陆成功";
-        this.status = "success";
-        this.$router.push("/index");
-      } else {
-        this.message = "用户名或密码错误";
-        this.status = "error";
-        this.disabled = false;
-      }
-    },
-  },
-};
+<script setup>
+import { ref } from "vue";
+import useAuthStore from "../stores/authStore";
+import { useRouter } from "vue-router";
+
+const authStore = useAuthStore();
+const router = useRouter();
+const username = ref("");
+const password = ref("");
+const message = ref("");
+const status = ref("");
+function loginBtn() {
+  message.value = "";
+  if (username.value === "") {
+    message.value = "请输入用户名";
+    status.value = "error";
+    return;
+  }
+  if (password.value === "") {
+    message.value = "请输入密码";
+    status.value = "error";
+    return;
+  }
+  if (username.value === "qiuqiu" && password.value === "1314") {
+    message.value = "登陆成功";
+    status.value = "success";
+    authStore.login(username.value);
+    router.push("/index");
+  } else {
+    message.value = "用户名或密码错误";
+    status.value = "error";
+  }
+}
 </script>
 
 <style scoped>

@@ -1,45 +1,57 @@
 <template>
   <tr>
-    <td>{{ document.id }}</td>
-    <td>{{ document.doName }}</td>
-    <td>{{ document.size }}</td>
-    <td>{{ document.upTime }}</td>
+    <td>{{ user.id }}</td>
+    <td>{{ user.username }}</td>
+    <td>{{ user.email }}</td>
     <td>
-      <button @click="deleteBtn(document.id)">删除</button>
+      <button @click="editUser(user.id)">编辑</button>
+      <button @click="deleteUser(user.id)">删除</button>
     </td>
   </tr>
 </template>
 
 <script setup>
 defineProps({
-  document: {
+  user: {
     type: Object,
     required: true,
   },
 });
 
-const emit = defineEmits(["delete"]);
+const emit = defineEmits(["edit", "delete"]);
 
-function deleteBtn(id) {
+function editUser(id) {
+  emit("edit", id);
+}
+function deleteUser(id) {
   emit("delete", id);
 }
 </script>
 
-<style>
+<style scoped>
+/* 单元格 */
 td {
   border: 1px solid #ddd;
   padding: 15px;
   text-align: center;
 }
+
+/* 表格内按钮（编辑/删除） */
 td button {
+  width: 80%;
+  height: 30px;
   background: #ff4d4f;
   color: white;
   border: none;
   padding: 6px 14px;
+  margin: 5px auto;
   border-radius: 6px;
   cursor: pointer;
+  font-size: 16px;
   transition: background 0.3s;
+  display: block;
 }
+
 td button:hover {
   background: #ff7875;
 }

@@ -1,24 +1,18 @@
 <template>
   <div class="search">
     <input type="text" placeholder="请输入文件名" v-model="searchInput" />
-    <button @click="searchBtn">搜索</button>
   </div>
 </template>
 
-<script>
-export default {
-  emits: ["search"],
-  data() {
-    return {
-      searchInput: "",
-    };
-  },
-  methods: {
-    searchBtn() {
-      this.$emit("search", this.searchInput);
-    },
-  },
-};
+<script setup>
+import { ref, watch } from "vue";
+
+const emit = defineEmits(["search"]);
+const searchInput = ref("");
+
+watch(searchInput, (newvalue) => {
+  emit("search", newvalue);
+});
 </script>
 
 <style>
