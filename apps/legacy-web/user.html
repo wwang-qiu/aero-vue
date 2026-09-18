@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>用户管理</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="layout">
+    <div class="sider">
+      <h3>航空知识库</h3>
+      <a href="index.html">首页</a>
+      <a href="user.html" class="active">用户管理</a>
+      <a href="document.html">文档管理</a>
+      <a href="AIchat.html">AI问答</a>
+    </div>
+
+    <div class="content">
+      <h2>用户管理</h2>
+      <!--搜索区域-->
+      <div class="search">
+        <input type="text" id="searchInput" placeholder="请输入用户名称">
+        <button id="searchBtn">搜索</button>
+      </div>
+
+      <!--添加用户-->
+      <div class="addUser">
+        <input type="text" id="usernameInput" placeholder="用户名">
+        <input type="email" id="emailInput" placeholder="邮箱">
+        <button id="addBtn">添加用户</button>
+      </div>
+
+      <!--用户列表-->
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>用户名</th>
+            <th>邮箱</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody id="userList">
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <script src="user.js"></script>
+</body>
+
+</html>
