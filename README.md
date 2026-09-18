@@ -1,35 +1,37 @@
 # Aviation Knowledge Platform
 
-个人全栈开发练习与项目集合，核心项目为航空知识管理平台。
+航空知识管理全栈项目，基于 Vue 3 前端和 Python 后端开发。
 
-## 目录
+## 项目结构
 
-- `apps/web`：Vue 3 + Vite 前端应用
-- `apps/legacy-web`：原生 HTML/CSS/JavaScript 版本
-- `services/api`：FastAPI 后端服务
-- `examples/python-demo`：Python 命令行练习
-- `examples/typescript`：TypeScript 基础练习
-- `data`：练习数据文件
-- `docs`：学习笔记
+```text
+apps/web       Vue 3 + Vite 前端
+services/api   Python 后端服务
+docs            项目组件和开发文档
+```
 
-## 常用命令
+## 前端启动
 
 ```powershell
 cd apps/web
+npm install
 npm run dev
 ```
+
+## 后端启动
 
 ```powershell
 cd services/api
 python -m uvicorn main:app --reload
 ```
 
-```powershell
-cd examples/python-demo
-python main.py
-```
+## 技术栈
 
-```powershell
-cd examples/typescript
-npx tsc
-```
+- Vue 3
+- Vite
+- Pinia
+- Vue Router
+- Axios
+- Python
+
+旧版页面、练习代码和练习数据保留在本地，但不属于本项目仓库提交内容。

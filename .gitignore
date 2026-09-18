@@ -18,3 +18,8 @@ __pycache__/
 !.vscode/extensions.json
 .idea/
 .DS_Store
+
+# Local learning and legacy files, outside the core project submission
+apps/legacy-web/
+examples/
+data/
